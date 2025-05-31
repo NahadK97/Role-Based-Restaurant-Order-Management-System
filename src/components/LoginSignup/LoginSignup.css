@@ -1,0 +1,168 @@
+/* Base styles – mobile first */
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto 30px auto;
+  width: 90%;
+  max-width: 600px;
+  background: #fff;
+  padding-bottom: 30px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.logo img {
+  width: 120px;
+  height: 120px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.text {
+  color: #32a852;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.underline {
+  width: 50px;
+  height: 6px;
+  background: #32a852;
+  border-radius: 9px;
+}
+
+.inputs {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 90%;
+  height: 60px;
+  background: #eaeaea;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+
+.input img {
+  margin-right: 15px;
+  width: 24px;
+  height: 24px;
+}
+
+.input input {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #797979;
+  font-size: 16px;
+}
+
+.forgot-password {
+  padding-left: 20px;
+  margin-top: 20px;
+  color: #797979;
+  font-size: 16px;
+}
+
+.forgot-password span {
+  color: #30cf5a;
+  cursor: pointer;
+}
+
+.submit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin: 40px auto 0 auto;
+  width: 100%;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  max-width: 220px;
+  height: 50px;
+  color: #fff;
+  background: #30cf5a;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gray {
+  background: #eaeaea;
+  color: #676767;
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) {
+  .text {
+    font-size: 40px;
+  }
+
+  .input {
+    height: 70px;
+  }
+
+  .input input {
+    font-size: 18px;
+  }
+
+  .submit {
+    height: 55px;
+    font-size: 19px;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 1024px) {
+  .text {
+    font-size: 48px;
+  }
+
+  .input {
+    height: 80px;
+    width: 480px;
+  }
+
+  .input input {
+    height: 50px;
+    font-size: 19px;
+  }
+
+  .submit-container {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .submit {
+    width: 220px;
+    height: 59px;
+  }
+}
