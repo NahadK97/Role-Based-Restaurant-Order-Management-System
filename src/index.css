@@ -104,25 +104,25 @@ body {
 
 /* Add a New Item */
 
-.create {
+.add {
   max-width: 400px;
   margin: 0 auto;
   text-align: center;
 }
 
-.create label {
+.add label {
   text-align: left;
   display: block;
 }
 
-.create h2 {
+.add h2 {
   font-size: 20px;
   color: darkblue;
   margin-bottom: 30px;
 }
 
-.create input,
-.create select {
+.add input,
+.add select {
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
@@ -131,7 +131,7 @@ body {
   display: block;
 }
 
-.create button {
+.add button {
   background: darkblue;
   color: #fff;
   border: 0;

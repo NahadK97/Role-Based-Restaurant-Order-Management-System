@@ -25,7 +25,7 @@ const Add = () => {
     });
   };
   return (
-    <div className="create">
+    <div className="add">
       <h2>Add a New Item</h2>
       <form onSubmit={handleSubmit}>
         <label>Item Name: </label>
