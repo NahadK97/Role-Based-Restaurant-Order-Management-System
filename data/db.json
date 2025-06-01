@@ -1,0 +1,22 @@
+{
+  "menus": [
+    {
+      "name": "Chicken Biriyani",
+      "price": "2000 INR",
+      "img": "/biryani.png",
+      "id": "1"
+    },
+    {
+      "name": "Chicken Mandi",
+      "price": "1500 INR",
+      "img": "/mandi.png",
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "name": "Mango Shake",
+      "img": "/mangoShake.png",
+      "price": "500 INR"
+    }
+  ]
+}

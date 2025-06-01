@@ -1,10 +1,127 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
-  background: linear-gradient(#a8e063, #56ab2f);
+  font-family: "Quicksand";
+  color: #333;
+  background: lightblue;
+}
+
+.navbar {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  border-bottom: 2px solid darkblue;
+}
+
+.navbar h1 {
+  color: darkblue;
+}
+
+.navbar .links {
+  margin-left: auto;
+}
+
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}
+
+.navbar a:hover {
+  color: darkblue;
+}
+
+.content {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.food-preview:hover {
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+}
+.food-preview h2 {
+  font-size: 20px;
+  color: darkblue;
+  margin-bottom: 8px;
+}
+
+.food-preview {
+  margin: 20px 0;
+  position: relative;
+  padding: 1rem;
+  border: 1px solid lightgoldenrodyellow;
+  margin-bottom: 1rem;
+  width: 50%;
+}
+
+.food-preview p {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  margin: 0;
+  background: darkblue;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.food-preview button {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  margin: 0;
+  background: rgb(255, 0, 0);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.food-preview img {
+  max-width: 50%;
+  height: auto;
+  border-radius: 8px;
+}
+/* create new food form */
+.create {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.create label {
+  text-align: left;
+  display: block;
+}
+
+.create h2 {
+  font-size: 20px;
+  color: darkblue;
+  margin-bottom: 30px;
+}
+
+.create input,
+.create textarea,
+.create select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+
+.create button {
+  background: darkblue;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
 }

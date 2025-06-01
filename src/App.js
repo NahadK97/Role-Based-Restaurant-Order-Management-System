@@ -1,8 +1,21 @@
-import LoginSignup from "./components/LoginSignup/LoginSignup";
+import Admin from "./Admin";
+import Navbar from "./Navbar";
+// import LoginSignup from "./components/LoginSignup/LoginSignup";
+// function App() {
+//   return (
+//     <div className="App">
+//       <LoginSignup />
+//     </div>
+//   );
+// }
+
 function App() {
   return (
     <div className="App">
-      <LoginSignup />
+      <Navbar />
+      <div className="content">
+        <Admin />
+      </div>
     </div>
   );
 }
