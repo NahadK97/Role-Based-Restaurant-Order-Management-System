@@ -1,15 +1,19 @@
-const FoodList = ({ menu, title }) => {
+const FoodList = ({ menu, title, onDelete }) => {
   return (
-    <div className="food-list">
+    <div>
       <h2>{title}</h2>
-      {menu.map((menuItem) => (
-        <div className="food-preview" key={menuItem.id}>
-          <h2>{menuItem.name}</h2>
-          <img src={menuItem.img} alt={menuItem.name} />
-          <p>{menuItem.price}</p>
-          <button className="delete">Delete From Menu</button>
-        </div>
-      ))}
+      <div className="food-list">
+        {menu.map((menuItem) => (
+          <div className="food-card" key={menuItem.id}>
+            <h2>{menuItem.name}</h2>
+            <img src={menuItem.img} alt={menuItem.name} />
+            <p>{menuItem.price}</p>
+            <button className="delete" onClick={() => onDelete(menuItem.id)}>
+              Delete From Menu
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

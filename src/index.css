@@ -2,8 +2,11 @@
 
 * {
   margin: 0;
-  font-family: "Quicksand";
+  font-family: "Quicksand", sans-serif;
   color: #333;
+}
+
+body {
   background: lightblue;
 }
 
@@ -11,7 +14,7 @@
   padding: 20px;
   display: flex;
   align-items: center;
-  max-width: 600px;
+  max-width: 1200px; /* widened for responsiveness */
   margin: 0 auto;
   border-bottom: 2px solid darkblue;
 }
@@ -35,30 +38,41 @@
 }
 
 .content {
-  max-width: 600px;
+  max-width: 1200px; /* widened for responsiveness */
   margin: 40px auto;
   padding: 20px;
 }
 
-.food-preview:hover {
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+/* Menu */
+.food-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
-.food-preview h2 {
+
+.food-card {
+  width: 75%;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.food-card:hover {
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.food-card h2 {
   font-size: 20px;
   color: darkblue;
   margin-bottom: 8px;
 }
 
-.food-preview {
-  margin: 20px 0;
-  position: relative;
-  padding: 1rem;
-  border: 1px solid lightgoldenrodyellow;
-  margin-bottom: 1rem;
-  width: 50%;
-}
-
-.food-preview p {
+.food-card p {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -70,7 +84,7 @@
   font-weight: bold;
 }
 
-.food-preview button {
+.food-card button {
   position: absolute;
   bottom: 8px;
   right: 8px;
@@ -83,12 +97,13 @@
   cursor: pointer;
 }
 
-.food-preview img {
-  max-width: 50%;
-  height: auto;
+.food-card img {
+  width: 100%;
   border-radius: 8px;
 }
-/* create new food form */
+
+/* Add a New Item */
+
 .create {
   max-width: 400px;
   margin: 0 auto;
@@ -107,7 +122,6 @@
 }
 
 .create input,
-.create textarea,
 .create select {
   width: 100%;
   padding: 6px 10px;
