@@ -1,5 +1,6 @@
-import FoodList from "./FoodList";
-import useFetch from "./useFetch";
+// import FoodList from "./FoodList";
+import FoodList from "../components/FoodList";
+import useFetch from "../hooks/useFetch";
 import { useState, useEffect } from "react";
 
 const Admin = () => {

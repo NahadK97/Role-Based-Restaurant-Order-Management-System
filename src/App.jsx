@@ -1,15 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Admin from "./Admin";
-import Navbar from "./Navbar";
-import Add from "./Add";
-// import LoginSignup from "./components/LoginSignup/LoginSignup";
-// function App() {
-//   return (
-//     <div className="App">
-//       <LoginSignup />
-//     </div>
-//   );
-// }
+import Admin from "./pages/Admin";
+import Navbar from "./components/Navbar";
+import Add from "./pages/Add";
+import LoginSignup from "./components/LoginSignup";
 
 function App() {
   return (
@@ -23,6 +16,9 @@ function App() {
             </Route>
             <Route exact path="/add">
               <Add />
+            </Route>
+            <Route exact path="/login">
+              <LoginSignup />
             </Route>
           </Switch>
         </div>
