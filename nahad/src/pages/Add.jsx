@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Add = () => {
   const [name, setName] = useState("");
   const [img, setImg] = useState("");
   const [price, setPrice] = useState("");
   const [isPending, setIsPending] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ const Add = () => {
       console.log("New item added");
       setIsPending(false);
       // Redirect to the home page after adding the menu
-      history.push("/");
+      navigate("/");
     });
   };
   return (

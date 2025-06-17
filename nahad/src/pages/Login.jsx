@@ -1,22 +1,20 @@
 import { useState } from "react";
 import "./Login.css";
 import login_icon from "../assets/login-icon.avif";
-// import { useLogin } from "../hooks/useLogin";
+import { useLogin } from "../hooks/useLogin";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [RID, setRID] = useState("");
   const [role, setRole] = useState("");
-  // const { login, error, isLoading } = useLogin();
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   await login(email, password);
-  // };
+  const { login, error, isLoading } = useLogin();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(RID, role, email, password);
+  };
   return (
-    <form
-      className="login"
-      // onSubmit={handleSubmit}
-    >
+    <form className="login" onSubmit={handleSubmit}>
       <h3>Login</h3>
       <div className="logo">
         <img src={login_icon} alt="Logo" />
@@ -52,12 +50,8 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button
-      // disabled={isLoading}
-      >
-        Log in
-      </button>
-      {/* {error && <p className="error">{error}</p>} */}
+      <button disabled={isLoading}>Log in</button>
+      {error && <p className="error">{error}</p>}
     </form>
   );
 };

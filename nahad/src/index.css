@@ -1,17 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+
 * {
-  margin: 0;
   font-family: "Quicksand", sans-serif;
   color: #333;
 }
 
 body {
+  margin: 0;
   background: lightblue;
 }
 
-.navbar {
-  padding: 20px;
+header .container {
   display: flex;
   align-items: center;
   max-width: 1200px; /* widened for responsiveness */
@@ -19,27 +23,52 @@ body {
   border-bottom: 2px solid darkblue;
 }
 
-.navbar h1 {
-  color: darkblue;
+header a {
+  color: #333;
+  text-decoration: none;
 }
 
-.navbar .links {
-  margin-left: auto;
-}
-
-.navbar a {
+.container a {
   margin-left: 16px;
   text-decoration: none;
   padding: 6px;
 }
 
-.navbar a:hover {
+.container a:hover {
   color: darkblue;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px auto;
+  margin-right: 20px;
+}
+
+nav a,
+nav button {
+  margin-left: 10px;
+}
+
+nav button {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.pages {
+  max-width: 1400px;
+  padding: 20px;
+  margin: 0 auto;
 }
 
 .content {
   max-width: 1200px; /* widened for responsiveness */
-  margin: 40px auto;
+  margin: 0 auto;
   padding: 20px;
 }
 

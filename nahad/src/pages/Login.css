@@ -12,11 +12,17 @@ form h3 {
   text-align: center;
   font-size: 1.5rem;
 }
-
+.logo {
+  display: flex;
+  justify-content: center;
+}
 .logo img {
   width: 100px;
   height: auto;
   margin-bottom: 10px;
+  border: 2px solid #1aac83;
+  padding: 5px;
+  border-radius: 50%;
 }
 
 input,
