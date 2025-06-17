@@ -3,6 +3,8 @@ import Admin from "./pages/Admin";
 import Navbar from "./components/Navbar";
 import Add from "./pages/Add";
 import LoginSignup from "./components/LoginSignup";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -18,7 +20,10 @@ function App() {
               <Add />
             </Route>
             <Route exact path="/login">
-              <LoginSignup />
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <Signup />
             </Route>
           </Switch>
         </div>

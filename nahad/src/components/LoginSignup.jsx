@@ -4,6 +4,7 @@ import user_icon from "../assets/person.png";
 import email_icon from "../assets/email.png";
 import password_icon from "../assets/password.png";
 import login_icon from "../assets/login-icon.avif";
+// delete
 
 const LoginSignup = () => {
   const [action, setAction] = useState("Sign Up");
@@ -25,6 +26,16 @@ const LoginSignup = () => {
         >
           <img src={user_icon} alt="user" />
           <input type="text" placeholder="Username" />
+        </div>
+
+        <div className="input">
+          <img src={user_icon} alt="user" />
+          <input type="select" placeholder="Username" />
+        </div>
+
+        <div className="input">
+          <img src={email_icon} alt="id" />
+          <input type="text" placeholder="Restaurant ID" />
         </div>
 
         <div className="input">
