@@ -17,6 +17,12 @@
       "name": "Mango Shake",
       "img": "/mangoShake.png",
       "price": "500 INR"
+    },
+    {
+      "id": "33cd",
+      "name": "Thalasery",
+      "img": "C:\\fakepath\\biryani.png",
+      "price": "2700"
     }
   ]
 }

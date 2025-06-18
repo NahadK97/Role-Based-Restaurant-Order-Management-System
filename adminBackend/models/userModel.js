@@ -8,7 +8,6 @@ const userSchema = new Schema({
   RID: {
     type: String,
     required: true,
-    unique: true,
   },
   role: {
     type: String,

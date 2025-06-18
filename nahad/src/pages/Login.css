@@ -8,7 +8,9 @@ input,
 select {
   display: block;
 }
-form h3 {
+form h3,
+h2 {
+  color: darkblue;
   text-align: center;
   font-size: 1.5rem;
 }
@@ -57,7 +59,8 @@ input.error {
 
 /* auth forms */
 form.signup,
-form.login {
+form.login,
+.add {
   max-width: 400px;
   margin: 40px auto;
   padding: 20px;
