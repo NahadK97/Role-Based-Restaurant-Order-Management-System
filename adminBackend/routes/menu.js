@@ -4,7 +4,6 @@ const {
   getItems,
   getItem,
   deleteItem,
-  updateItem,
 } = require("../controllers/menuController");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -24,9 +23,6 @@ router.post("/", createItem);
 
 // DELETE an item
 router.delete("/:id", deleteItem);
-
-// UPDATE an item
-router.patch("/:id", updateItem);
 
 // Export the router
 module.exports = router;

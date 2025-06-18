@@ -3,9 +3,8 @@ const mongoose = require("mongoose");
 
 // get all items
 const getItems = async (req, res) => {
-  const user_id = req.user.RID;
-
-  const menu = await Workout.find({ user_id });
+  const RID = req.user.RID;
+  const menu = await Menu.find({ RID }).sort({ createdAt: -1 });
 
   res.status(200).json(menu);
 };
@@ -18,13 +17,13 @@ const getItem = async (req, res) => {
     return res.status(404).json({ error: "No such item" });
   }
 
-  const workout = await Workout.findById(id);
+  const item = await Menu.findById(id);
 
-  if (!workout) {
+  if (!item) {
     return res.status(404).json({ error: "No such item" });
   }
 
-  res.status(200).json(workout);
+  res.status(200).json(item);
 };
 
 // create new item
@@ -57,32 +56,9 @@ const deleteItem = async (req, res) => {
   res.status(200).json(item);
 };
 
-// update an item
-const updateItem = async (req, res) => {
-  const { id } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "No such item" });
-  }
-
-  const item = await Menu.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
-    }
-  );
-
-  if (!item) {
-    return res.status(400).json({ error: "No such item" });
-  }
-
-  res.status(200).json(item);
-};
-
 module.exports = {
   createItem,
   getItems,
   getItem,
   deleteItem,
-  updateItem,
 };

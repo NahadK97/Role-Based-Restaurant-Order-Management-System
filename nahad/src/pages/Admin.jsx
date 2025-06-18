@@ -1,42 +1,36 @@
-// import FoodList from "./FoodList";
+import { useEffect } from "react";
+import { useMenuContext } from "../hooks/useMenuContext";
+import { useAuthContext } from "../hooks/useAuthContext";
+// components
 import FoodList from "../components/FoodList";
-import useFetch from "../hooks/useFetch";
-import { useState, useEffect } from "react";
 
 const Admin = () => {
-  const {
-    data: food,
-    isPending,
-    error,
-  } = useFetch("http://localhost:8000/menus");
-
-  const [menuData, setMenuData] = useState([]);
-
+  const { menu, dispatch } = useMenuContext();
+  const { user } = useAuthContext();
   useEffect(() => {
-    if (food) {
-      setMenuData(food);
+    const fetchMenu = async () => {
+      const response = await fetch("/api/menu", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
+      if (response.ok) {
+        dispatch({ type: "SET_ITEMS", payload: json });
+      }
+    };
+    if (user) {
+      fetchMenu();
     }
-  }, [food]);
-
-  const handleDelete = (id) => {
-    fetch(`http://localhost:8000/menus/${id}`, {
-      method: "DELETE",
-    }).then(() => {
-      setMenuData(menuData.filter((item) => item.id !== id));
-    });
-  };
-
+  }, [dispatch, user]);
   return (
-    <div className="home">
-      {error && <div>{error}</div>}
-      {isPending && <div>Loading...</div>}
-      {menuData && (
-        <FoodList
-          menu={menuData}
-          title="The Daily Menu!"
-          onDelete={handleDelete}
-        />
-      )}
+    <div className="admin-header">
+      <h2>Menu</h2>
+      <div className="admin">
+        <div className="food-list">
+          {menu && menu.map((item) => <FoodList key={item._id} item={item} />)}
+        </div>
+      </div>
     </div>
   );
 };
