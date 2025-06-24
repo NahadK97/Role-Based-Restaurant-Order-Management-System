@@ -13,7 +13,7 @@ const MinCategoryCard = ({category}) => {
             <h1 className="bg-blue-900 flex p-2 justify-between items-center min-h-fit h-[10%] text-xl">{category.category} <Icon onClick={handleClick} className="border-3"/></h1>
             <div className="overflow-y-hidden transition-max-height duration-500 ease" style={{maxHeight : expanded ? "1000px" : "0"}}>
             {
-                category.list.map((dish,index) => 
+                category.dishes.map((dish,index) => 
                     <MinDishCard key={index} dish = {dish}/>
                 )
             }

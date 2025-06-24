@@ -19,7 +19,7 @@ const MenuCategoryBox = ({category}) => {
             </div>
             <div className="flex flex-wrap gap-20 pt-10 items-center justify-center bg-gray-400 overflow-hidden transition-max-height duration-500" style={{maxHeight : expanded ? "1000vh" : "0"}}>
                 {
-                    category.list.map((dish, index) => {
+                    category.dishes.map((dish, index) => {
                         return <MenuDishCard key={index} name = {dish.name} price={dish.price} img={dish.img}/>
                     })
                 }

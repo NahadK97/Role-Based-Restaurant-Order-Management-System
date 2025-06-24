@@ -7,7 +7,7 @@ const MinDishCard = ({dish}) => {
     const Icon = checked ? SquareCheckBig : Square;
     const handleClick = () => {
         setChecked(prev => (!prev));
-        onToggle(dish.name, dish.price);
+        onToggle(dish.name);
     }
   return (
             <div className="flex justify-around p-2 w-ful text-lg">

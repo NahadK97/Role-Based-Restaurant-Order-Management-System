@@ -1,28 +1,29 @@
+import axios from "axios";
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import dummyMenu from "../../assets/Lists/dummyMenu";
+import { fetchMenu } from "../../api/fetchMenu";
 import Amount from "../../components/Amount";
 import DishCounter from "../../components/DishCounter";
 import MinMenuCard from "../../components/MinMenuCard";
 import Reset from "../../components/Reset";
 import TableSelector from "../../components/TableSelector";
+import { userContext } from "../../contexts/userContext";
 import CalcTotal from "../../utils/CalcTotal";
 const NewOrder = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [orderList, setOrderList] = useState([]);
+  const [menu, setMenu] = useState([]);
   const [total, setTotal] = useState(0);
-  let table;
-  const menuList = dummyMenu.flatMap(category => category.list)
+  const {RID} = useContext(userContext);
+  const [table, setTable] = useState(1);
   const location = useLocation();
   const navigate = useNavigate();
   const fromPage = location.state?.from;
   const updateTable = (number) => {
-    table = number;
+    setTable(() => number);
   }
   const handleSaving = (currentOrder) => {
-    // setOrderList(list);    
-    // setTotal(amount);
     const prevOrder = orderList.map(order => order.name);
     let tempOrder = orderList;
     currentOrder.map(dish => {
@@ -57,22 +58,27 @@ const NewOrder = () => {
   const removeItem = (dish) => {
     setOrderList(prev => prev.filter(order => order.name !== dish)) 
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if(orderList.length == 0) alert("please choose atleast one item!")
     else {
+      console.log(table);
+      
       const orderJSON = {
         tableNo : table,
-        status : 'yet-to-cook',
-        dishList : orderList
+        list : orderList
       }
-      const tableJSON = {
-        tableNo : table,
-        amount : total
+      //api call
+      try {
+        const response = await axios.post(`http://localhost:4000/api/${RID}/orders`,orderJSON);
+        if(response.data.error) alert(response.data.error);
+        else exitPage();
       }
-      console.log(orderJSON);
-      console.log(tableJSON);
-      exitPage();      
+      catch(error) {
+        alert("oops! something went wrong:)");
+        console.log(error);
+      }
+            
     }
   }
   const exitPage = () => {
@@ -80,7 +86,17 @@ const NewOrder = () => {
     else navigate('/waiter')
   }
   useEffect(()=>{
-    setTotal(CalcTotal(orderList, menuList))
+    const getMenu = async () => {
+      try {
+        const response = await fetchMenu(RID);
+        setMenu(response);
+      }
+      catch(err) {
+        alert("could not fetch menu");
+      }
+    }
+    getMenu();
+    setTotal(CalcTotal(orderList, menu.flatMap(category => category.dishes)))
   },[orderList])
   return (
     <div className="w-full h-screen bg-gray-900 flex flex-col justify-center items-center">
@@ -89,7 +105,7 @@ const NewOrder = () => {
             <h1 className="text-black text-xl my-2 font-bold">Place New Order!</h1>   
             <form className="flex flex-col h-9/10" action="/submit" method="POST" name="orderlist">
                 <div className="flex flex-wrap justify-center gap-5">
-                    <TableSelector updateTable={updateTable} fixedTable={location.state?.table}/>
+                    <TableSelector updateTable={updateTable} initialValue={table} fixedTable={location.state?.table}/>
                     <Amount amount = {total}/>
                     <Reset handleClick={handleReset}/>
                 </div>
@@ -109,7 +125,7 @@ const NewOrder = () => {
             </form>         
         </div>
         }
-        {showMenu && <MinMenuCard orderList={orderList} total={total} handleClosing={handleClosing} handleSaving={handleSaving} />}
+        {showMenu && <MinMenuCard orderList={orderList} handleClosing={handleClosing} handleSaving={handleSaving} />}
         {!showMenu }
     </div>
   )

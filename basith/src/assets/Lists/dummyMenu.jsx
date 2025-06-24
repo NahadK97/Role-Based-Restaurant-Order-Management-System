@@ -1,7 +1,7 @@
 const dummyMenu = [
   {
     category : "Biryani",
-    list : [
+    dishes : [
       {
         name : "Dum Biryani - Half",
         price : 180,
@@ -26,7 +26,7 @@ const dummyMenu = [
   },
   {
     category : "Mandhi",
-    list : [
+    dishes : [
       {
         name : "Chicken Mandhi - half",
         price : 210,
@@ -51,7 +51,7 @@ const dummyMenu = [
   },
   {
     category : "Cool drinks",
-    list : [
+    dishes : [
       {
         name : "Sprite 1Ltr",
         price : 60,
