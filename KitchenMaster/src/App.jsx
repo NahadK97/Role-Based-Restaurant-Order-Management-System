@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Header from './components/Header';
 import OrdersBoard from './components/OrdersBoard';
 import './App.css';
 
+// You can also store this in a .env file or userContext
+const RID = 'your_restaurant_id_here'; // Replace with actual restaurant ID
+
 const sortOrder = {
-  ordered: 1,
+  placed: 1,
   preparing: 2,
-  prepared: 3,
-  taken: 4,
-  declined: 5,
+  ready: 3,
+  delivered: 4,
 };
 
 const App = () => {
@@ -16,36 +19,46 @@ const App = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const data = [
-        { table: 1, items: ['1 Chicken Noodles', '1 Paneer Tikka'], status: 'ordered' },
-        { table: 2, items: ['2 Chicken Biryani', '2 Naan'], status: 'preparing' },
-        { table: 3, items: ['1 Veg Burger', '1 Fries'], status: 'prepared' },
-        { table: 4, items: ['1 Pizza', '2 Cokes'], status: 'ordered' },
-        { table: 5, items: ['1 Grilled Sandwich'], status: 'preparing' },
-        { table: 6, items: ['1 Chocolate Cake'], status: 'prepared' }
-      ];
-      setOrders(data);
+      try {
+        const response = await axios.get(`http://localhost:4000/api/${RID}/orders`);
+        const sorted = response.data.sort(
+          (a, b) => sortOrder[a.status] - sortOrder[b.status]
+        );
+        setOrders(sorted);
+      } catch (err) {
+        console.error('Error fetching orders:', err);
+        alert('Failed to load orders from server.');
+      }
     };
+
     fetchOrders();
   }, []);
 
-  const updateStatus = (table, newStatus) => {
-    setOrders(prev =>
-      prev
-        .map(order =>
-          order.table === table ? { ...order, status: newStatus } : order
-        )
-        .filter(order => order.status !== 'taken')
-    );
-  };
+  const updateStatus = async (table, newStatus) => {
+    try {
+      setOrders((prev) =>
+        prev
+          .map((order) =>
+            order.tableNo === table ? { ...order, status: newStatus } : order
+          )
+          .filter((order) => order.status !== 'delivered')
+      );
 
-  const sortedOrders = [...orders].sort((a, b) => sortOrder[a.status] - sortOrder[b.status]);
+      await axios.patch(
+        `http://localhost:4000/api/${RID}/orders/edit/${table}`,
+        { status: newStatus }
+      );
+    } catch (err) {
+      console.error('Error updating order status:', err);
+      alert('Failed to update status');
+    }
+  };
 
   return (
     <>
       <Header />
       <main className="main-content">
-        <OrdersBoard orders={sortedOrders} updateStatus={updateStatus} />
+        <OrdersBoard orders={orders} updateStatus={updateStatus} />
       </main>
     </>
   );
