@@ -43,40 +43,7 @@ const addDishToCategory = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
-// put a category
-const editCategoryName = async (req, res) => {
-  const { id, category } = req.params;
-  const { newName } = req.body;
-  try {
-    const response = await Menu.findOneAndUpdate(
-      { RID: id, category: category },
-      { $set: { category: newName } },
-      { new: true }
-    );
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(400).json({ error: "could not modify category" });
-  }
-};
-//edit a dish name of a particular category
-const editDish = async (req, res) => {
-  const { id, category } = req.params;
-  const { oldName, newName, newPrice, newImg } = req.body;
-  try {
-    const updateFields = {};
-    if (newName) updateFields["dishes.$.name"] = newName;
-    if (newPrice !== undefined) updateFields["dishes.$.price"] = newPrice;
-    if (newImg !== undefined) updateFields["dishes.$.img"] = newImg;
-    const response = await Menu.findOneAndUpdate(
-      { RID: id, category: category, "dishes.name": oldName },
-      { $set: updateFields },
-      { new: true }
-    );
-    res.status(200).json(response);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-};
+
 //delete a dish from a category
 const deleteDishFromCategory = async (req, res) => {
   const { id, category, dishId } = req.params;
@@ -104,25 +71,12 @@ const deleteCategory = async (req, res) => {
     res.status(400).json({ error: "could not delete category" });
   }
 };
-//delete whole menu
-const deleteAllCategory = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const response = await Menu.deleteMany({ RID: id });
-    res.status(200).json({ deletedCount: response.deletedCount });
-  } catch (error) {
-    res.status(400).json({ error: "could not complete delete operation" });
-  }
-};
 
 module.exports = {
   addDishToCategory,
   addNewCategory,
-  deleteAllCategory,
   deleteCategory,
   deleteDishFromCategory,
-  editCategoryName,
-  editDish,
   getACategory,
   getAllMenuItems,
 };
