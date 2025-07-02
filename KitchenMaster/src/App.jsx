@@ -4,14 +4,15 @@ import Header from './components/Header';
 import OrdersBoard from './components/OrdersBoard';
 import './App.css';
 
-// You can also store this in a .env file or userContext
-const RID = 'your_restaurant_id_here'; // Replace with actual restaurant ID
+
+const RID = 'your_restaurant_id_here'; 
 
 const sortOrder = {
   placed: 1,
   preparing: 2,
   ready: 3,
-  delivered: 4,
+  locked: 4,
+  delivered: 5
 };
 
 const App = () => {
@@ -21,9 +22,9 @@ const App = () => {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/api/${RID}/orders`);
-        const sorted = response.data.sort(
-          (a, b) => sortOrder[a.status] - sortOrder[b.status]
-        );
+        const sorted = response.data
+        .sort((a, b) => sortOrder[a.status] - sortOrder[b.status])
+        .filter(order=>order.status!='locked' && order.status!=='delivered');  ;
         setOrders(sorted);
       } catch (err) {
         console.error('Error fetching orders:', err);
@@ -41,7 +42,7 @@ const App = () => {
           .map((order) =>
             order.tableNo === table ? { ...order, status: newStatus } : order
           )
-          .filter((order) => order.status !== 'delivered')
+          .filter((order) => order.status !== 'locked' && order.status !== 'delivered')
       );
 
       await axios.patch(
