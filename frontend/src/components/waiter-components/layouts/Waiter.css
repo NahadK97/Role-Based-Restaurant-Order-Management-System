@@ -1,0 +1,36 @@
+.waiter-layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content;
+}
+
+@media (min-width: 1024px) {
+  .waiter-layout-wrapper {
+    flex-direction: row;
+  }
+}
+
+.waiter-sidebar {
+  display: flex;
+  justify-content: center;
+  gap: 3.75rem; /* gap-15 in Tailwind (15 * 0.25rem) */
+  background-color: #1f2937; /* gray-800 */
+  padding-left: 7.5rem; /* pl-30 = 30 * 0.25rem */
+
+  min-height: 20vh;
+  min-width: fit-content;
+}
+
+@media (min-width: 1024px) {
+  .waiter-sidebar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100vh;
+    width: 16.666667%; /* lg:w-1/6 */
+    padding-left: 2%;
+  }
+
+  .waiter-layout-wrapper {
+    min-width: 100%;
+  }
+}

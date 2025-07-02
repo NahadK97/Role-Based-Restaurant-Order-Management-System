@@ -1,0 +1,36 @@
+.waiter-tab {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; /* Tailwind's gap-2 */
+  font-size: 1.25rem; /* text-xl */
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .waiter-tab {
+    font-size: 1.875rem; /* text-3xl */
+  }
+}
+
+@media (min-width: 1536px) {
+  .waiter-tab {
+    font-size: 3.75rem; /* text-6xl */
+  }
+}
+
+.waiter-tab-icon {
+  transform: scale(1); /* base scale */
+
+  @media (min-width: 1024px) {
+    transform: scale(1.5); /* lg:scale-150 */
+  }
+}
+
+.waiter-tab-label {
+  padding-left: 0;
+
+  @media (min-width: 1024px) {
+    padding-left: 1.25rem; /* lg:pl-5 */
+  }
+}
