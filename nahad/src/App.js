@@ -6,11 +6,10 @@ import Navbar from "./components/Navbar";
 import Add from "./pages/Add";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Unauthorized from "./pages/Unauthorized"; // New component
-import WaiterDashboard from "./pages/WaiterDashboard"; // New component
-import KitchenManager from "./pages/KitchenManager"; // New component
+import Unauthorized from "./pages/Unauthorized";
+import WaiterDashboard from "./pages/WaiterDashboard";
+import KitchenManager from "./pages/KitchenManager";
 
-// Role-based route protector component
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user } = useAuthContext();
 
@@ -27,6 +26,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
 function App() {
   const { user } = useAuthContext();
+  const restaurantId = user?.RID; // ✅ safer with optional chaining
 
   return (
     <div className="App">
@@ -37,17 +37,25 @@ function App() {
             {/* Public routes */}
             <Route
               path="/login"
-              element={!user ? <Login /> : <Navigate to="/" replace />}
+              element={
+                !user ? <Login /> : <Navigate to={`/${restaurantId}`} replace />
+              }
             />
             <Route
               path="/signup"
-              element={!user ? <Signup /> : <Navigate to="/" replace />}
+              element={
+                !user ? (
+                  <Signup />
+                ) : (
+                  <Navigate to={`/${restaurantId}`} replace />
+                )
+              }
             />
             <Route path="/unauthorized" element={<Unauthorized />} />
 
             {/* Protected routes with role-based access */}
             <Route
-              path="/"
+              path="/:restaurantId"
               element={
                 <ProtectedRoute allowedRoles={["admin", "waiter", "km"]}>
                   {user?.role === "admin" && <Admin />}
@@ -58,7 +66,7 @@ function App() {
             />
 
             <Route
-              path="/add"
+              path="/:restaurantId/add"
               element={
                 <ProtectedRoute allowedRoles={["admin"]}>
                   <Add />
@@ -67,7 +75,16 @@ function App() {
             />
 
             {/* 404 fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route
+              path="*"
+              element={
+                user ? (
+                  <Navigate to={`/${restaurantId}`} replace />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
           </Routes>
         </div>
       </BrowserRouter>

@@ -20,9 +20,9 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use('/api/:id/orders',orderRoutes);
-app.use('/api/:id/tables',tableRoutes);
-app.use('/api/:id/menu',menuRoutes);
+app.use("/api/:id/orders", orderRoutes);
+app.use("/api/:id/tables", tableRoutes);
+app.use("/api/:id/menu", menuRoutes);
 app.use("/api/user", userRoutes);
 
 // connect to db
