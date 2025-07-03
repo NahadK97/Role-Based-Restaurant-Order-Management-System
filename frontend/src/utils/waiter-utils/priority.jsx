@@ -1,6 +1,6 @@
 const priority = {
   locked : 0,
-  ready: 1,
+  prepared: 1,
   preparing: 2,
   placed: 3,
 };

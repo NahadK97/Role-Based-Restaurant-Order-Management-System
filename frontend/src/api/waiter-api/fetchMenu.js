@@ -7,6 +7,7 @@ export const fetchMenu = async (RID, token) => {
           Authorization: `Bearer ${token}`,
         },
       }); 
+        
         return response.data;
       }
       catch(err) {

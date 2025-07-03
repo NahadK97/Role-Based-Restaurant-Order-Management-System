@@ -10,7 +10,7 @@ const OrderCard = ({ order }) => {
   const [buttonText, setButtonText] = useState(null);
   const {user} = useAuthContext();
   useEffect(() => {
-    if (status === "ready") {
+    if (status === "prepared") {
       setButtonClass("order-card-btn orange-btn");
       setButtonText("Lock");
     } else if (status === "locked") {
@@ -25,7 +25,7 @@ const OrderCard = ({ order }) => {
   const handleButtonClick = async () => {
     if (status === "placed" || status === "preparing") return;
 
-    if (status === "ready") {
+    if (status === "prepared") {
       try {
         await axios.patch(`http://localhost:4000/api/${user.RID}/orders/edit/${order.tableNo}`, {
           status: "locked",
@@ -47,18 +47,21 @@ const OrderCard = ({ order }) => {
         },
       }
         );
-
+        
+      
+        
         const orders = order.list.map((item) => ({
           name: item.name,
           quantity: item.quantity,
         }));
-        const menu = await fetchMenu(user.RID);
+        const menu = await fetchMenu(user.RID, user.token);
+        
         const total = await CalcTotal(
           orders,
           menu.flatMap((cat) => cat.dishes)
         );
-
-        if (checkResponse.data) {
+        
+        if (checkResponse.data) {          
           await axios.patch(
             `http://localhost:4000/api/${user.RID}/tables/${order.tableNo}/edit`,
             { orders, total }, {
@@ -87,7 +90,9 @@ const OrderCard = ({ order }) => {
         },
       }
         );
-      } catch {
+      } catch(error) {
+        console.log(error);
+        
         alert("could not finish the process");
       }
     }

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Header from './Header';
-import OrdersBoard from './OrdersBoard';
+import { useEffect, useState } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import './KitchenMaster.css';
+import Header from './Header';
+import './KitchenMasterApp.css';
+import OrdersBoard from './OrdersBoard';
 
 const KitchenMaster = () => {
   const { user } = useAuthContext();

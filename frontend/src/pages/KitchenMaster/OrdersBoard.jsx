@@ -1,5 +1,4 @@
-import React from 'react';
-import DishCard from './DishCard';
+import DishCard from '../../components/waiter-components/DishCard';
 
 const OrdersBoard = ({ orders, updateStatus }) => {
   const createButton = (label, className, onClick) => (
