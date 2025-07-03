@@ -15,7 +15,7 @@ const orderSchema = new Schema({
     status : {
         type : String,
         required : true,
-        enum : ["placed", "preparing", "ready","locked", "delivered"],
+        enum : ["placed", "preparing", "prepared","locked", "delivered"],
     },
     list : [
         {
