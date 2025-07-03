@@ -1,32 +1,42 @@
 import React from 'react';
+import DishCard from './DishCard';
 
 const OrdersBoard = ({ orders, updateStatus }) => {
-  const createButton = (text, className, handler) => (
-    <button className={className} onClick={handler}>{text}</button>
+  const createButton = (label, className, onClick) => (
+    <button className={className} onClick={onClick}>
+      {label}
+    </button>
   );
 
   return (
     <div id="orders">
       {orders.map(order => (
-        <div key={order.table} className="order-card" data-status={order.status}>
+        <div key={order.tableNo} className="order-card" data-status={order.status}>
           <div className="order-header">
-            <strong>Table {order.table}</strong>
+            <strong>Table {order.tableNo}</strong>
             <em className={`status-label ${order.status}`}>{order.status}</em>
           </div>
-          <ul className="order-items">
-            {order.items.map((item, idx) => <li key={idx}>{item}</li>)}
-          </ul>
+
+          <div className="order-items">
+            {order.list.map((item, idx) => (
+              <DishCard
+                key={idx}
+                name={item.name}
+                quantity={item.quantity}
+                description={item.description}
+              />
+            ))}
+          </div>
+
           <div className="buttons">
-            {order.status === 'ordered' && (
-              <>
-                {createButton('Accept', 'accept', () => updateStatus(order.table, 'preparing'))}
-                {createButton('Decline', 'decline', () => updateStatus(order.table, 'declined'))}
-              </>
-            )}
+            {order.status === 'placed' &&
+              createButton('Accept', 'accept', () =>
+                updateStatus(order.tableNo, 'preparing')
+              )}
             {order.status === 'preparing' &&
-              createButton('Prepared', 'ready', () => updateStatus(order.table, 'prepared'))}
-            {order.status === 'prepared' &&
-              createButton('Taken', 'take', () => updateStatus(order.table, 'taken'))}
+              createButton('Prepared', 'ready', () =>
+                updateStatus(order.tableNo, 'prepared')
+              )}
           </div>
         </div>
       ))}

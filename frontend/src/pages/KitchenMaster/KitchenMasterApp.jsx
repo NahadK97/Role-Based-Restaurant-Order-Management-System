@@ -2,47 +2,69 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from './Header';
 import OrdersBoard from './OrdersBoard';
-import './KitchenMaster.css'; // Updated import
+import { useAuthContext } from '../../hooks/useAuthContext';
+import './KitchenMaster.css';
 
-const KitchenMasterApp = ({ restaurantId }) => {
+const KitchenMaster = () => {
+  const { user } = useAuthContext();
   const [orders, setOrders] = useState([]);
 
   const sortOrder = {
     placed: 1,
     preparing: 2,
-    ready: 3,
-    delivered: 4,
+  };
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/${user.RID}/orders`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      const filtered = response.data.filter(order =>
+        order.status === 'placed' || order.status === 'preparing'
+      );
+
+      const sorted = filtered.sort(
+        (a, b) => sortOrder[a.status] - sortOrder[b.status]
+      );
+
+      setOrders(sorted);
+    } catch (err) {
+      console.error('Error fetching orders:', err);
+      alert('Failed to load orders from server.');
+    }
   };
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(`http://localhost:4000/api/${restaurantId}/orders`);
-        const sorted = response.data.sort((a, b) => sortOrder[a.status] - sortOrder[b.status]);
-        setOrders(sorted);
-      } catch (err) {
-        console.error('Error fetching orders:', err);
-        alert('Failed to load orders from server.');
-      }
-    };
-
     fetchOrders();
-  }, [restaurantId]);
+    const interval = setInterval(fetchOrders, 5000); 
+    return () => clearInterval(interval);
+  }, []);
 
-  const updateStatus = async (table, newStatus) => {
+  const updateStatus = async (tableNo, newStatus) => {
     try {
-      setOrders(prev =>
-        prev
-          .map(order => (order.tableNo === table ? { ...order, status: newStatus } : order))
-          .filter(order => order.status !== 'delivered')
+      await axios.patch(
+        `http://localhost:4000/api/${user.RID}/orders/edit/${tableNo}`,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
       );
 
-      await axios.patch(`http://localhost:4000/api/${restaurantId}/orders/edit/${table}`, {
-        status: newStatus,
-      });
+      setOrders(prev =>
+        prev
+          .map(order =>
+            order.tableNo === tableNo ? { ...order, status: newStatus } : order
+          )
+          .filter(order => newStatus !== 'prepared')
+      );
     } catch (err) {
       console.error('Error updating order status:', err);
-      alert('Failed to update status');
+      alert('Failed to update order status');
     }
   };
 
@@ -56,4 +78,4 @@ const KitchenMasterApp = ({ restaurantId }) => {
   );
 };
 
-export default KitchenMasterApp;
+export default KitchenMaster;
