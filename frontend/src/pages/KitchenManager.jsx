@@ -1,11 +1,12 @@
+import React from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import KitchenMasterApp from './KitchenMaster/KitchenMasterApp';
+
 const KitchenManager = () => {
-  return (
-    <div className="kitchen-manager">
-      <h1>Kitchen Manager Dashboard</h1>
-      <p>Manage kitchen operations here.</p>
-      {/* Add more functionality specific to Kitchen Manager */}
-    </div>
-  );
+  const { user } = useAuthContext();
+  const restaurantId = user?.RID;
+
+  return <KitchenMasterApp restaurantId={restaurantId} />;
 };
 
 export default KitchenManager;
