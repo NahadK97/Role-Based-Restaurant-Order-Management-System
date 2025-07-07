@@ -31,6 +31,9 @@ const addNewOrder = async (req, res) => {
         const check = await Order.findOne({RID : id, tableNo : tableNo});
         if(!check){
             const order = await Order.create({RID : id, tableNo : tableNo, status : status, list : list})
+            
+            req.io.emit("new-order", order); //emit new orders
+            
             res.status(201).json(order);
         }
         else res.status(200).json({error : "given table is already occupied!"})
@@ -45,7 +48,16 @@ const addNewOrder = async (req, res) => {
 const editOrder = async (req, res) => {
     const {id, table} = req.params;
     try {
-        const order = await Order.findOneAndUpdate({RID : id, tableNo : table},{...req.body})
+        const order = await Order.findOneAndUpdate({RID : id, tableNo : table},{...req.body}, { new: true});
+        if (req.body.status) {
+          // Emit 
+            req.io.emit("order-status-changed", {
+                RID: id,
+                tableNo: table,
+                newStatus: req.body.status
+            });
+        }
+    
         res.status(200).json(order);
     }
     catch(err){
