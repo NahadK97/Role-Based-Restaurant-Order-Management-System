@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { socket } from "../../socket";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchOrders } from "../../api/waiter-api/fetchOrders";
@@ -22,6 +23,20 @@ const OrdersPage = () => {
       }
     };
     getOrders();
+
+    const handleStatusChange = ({ tableNo, newStatus }) => {
+    setOrderList((prev) =>
+      prev.map((order) =>
+        order.tableNo === parseInt(tableNo) ? { ...order, status: newStatus } : order
+      )
+    );
+  };
+
+  socket.on("order-status-changed", handleStatusChange);
+
+  return () => {
+    socket.off("order-status-changed", handleStatusChange);
+  };
   }, []);
 
   return (

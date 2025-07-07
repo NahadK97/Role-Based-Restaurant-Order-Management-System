@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { socket } from '../../socket';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import Header from './Header';
@@ -39,8 +40,22 @@ const KitchenMaster = () => {
 
   useEffect(() => {
     fetchOrders();
-    const interval = setInterval(fetchOrders, 5000); 
-    return () => clearInterval(interval);
+    
+    const handleNewOrder = (order) => {
+    if (order.status === 'placed' || order.status === 'preparing') {
+      setOrders((prev) => {
+        const exists = prev.some(o => o.tableNo === order.tableNo);
+        return exists ? prev : [...prev, order].sort((a, b) => sortOrder[a.status] - sortOrder[b.status]);
+      });
+    }
+  };
+
+  socket.on("new-order", handleNewOrder);
+
+  return () => {
+    socket.off("new-order", handleNewOrder);
+  };
+    
   }, []);
 
   const updateStatus = async (tableNo, newStatus) => {
