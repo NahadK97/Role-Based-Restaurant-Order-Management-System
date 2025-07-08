@@ -13,7 +13,7 @@ const Navbar = () => {
     <header>
       <div className="container">
         <Link to="/">
-          <h1>Admin Window </h1>
+          <h1>Restaurant Management </h1>
         </Link>
         <nav>
           {user && (
