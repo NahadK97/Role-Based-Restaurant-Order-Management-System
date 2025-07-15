@@ -10,7 +10,12 @@ export const useLogin = () => {
     setIsLoading(true);
     setError(null);
 
-    const response = await fetch("/api/user/login", {
+    const API_BASE =
+      import.meta.env.MODE === "production"
+        ? import.meta.env.VITE_BACKEND_URL
+        : "";
+
+    const response = await fetch(`${API_BASE}/api/user/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ RID, role, email, password }),

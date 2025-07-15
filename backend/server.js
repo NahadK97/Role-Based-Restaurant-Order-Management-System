@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
-const cors = require("cors");  //updated for web sockets
+const cors = require("cors"); //updated for web sockets
 const http = require("http");
 const { Server } = require("socket.io");
 
@@ -18,22 +18,24 @@ const server = http.createServer(app); // Create HTTP server
 // setup Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: "*", // Allow frontend origin (change to frontend URL in production)
-    methods: ["GET", "POST"]
-  }
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    // Allow frontend origin (change to frontend URL in production)
+    methods: ["GET", "POST"],
+  },
 });
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // log requests
 app.use((req, res, next) => {
   console.log(req.path, req.method);
-  next();
-});
-
-app.use((req, res, next) => {
   req.io = io;
   next();
 });
@@ -58,7 +60,10 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     server.listen(process.env.PORT, () => {
-      console.log("✅ Connected to DB and listening on port", process.env.PORT);
+      console.log(
+        "✅ Connected to DB and listening on port",
+        process.env.PORT || 4000
+      );
     });
   })
   .catch((error) => {

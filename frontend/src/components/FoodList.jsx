@@ -12,9 +12,14 @@ const FoodList = ({ dish, category }) => {
       return;
     }
 
+    const API_BASE =
+      import.meta.env.MODE === "production"
+        ? import.meta.env.VITE_BACKEND_URL
+        : "";
+
     try {
       const response = await fetch(
-        `/api/${restaurantId}/menu/${category}/delete-dish/${dish._id}`,
+        `${API_BASE}/api/${restaurantId}/menu/${category}/delete-dish/${dish._id}`,
         {
           method: "PATCH",
           headers: {

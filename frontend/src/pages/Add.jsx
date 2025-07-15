@@ -31,16 +31,24 @@ const Add = () => {
       // First check if category exists
       const categoryExists = categories.includes(category);
 
+      const API_BASE =
+        import.meta.env.MODE === "production"
+          ? import.meta.env.VITE_BACKEND_URL
+          : "";
+
       // If category doesn't exist, create it first
       if (!categoryExists) {
-        const categoryResponse = await fetch(`/api/${restaurantId}/menu/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-          body: JSON.stringify({ newCategory: category }),
-        });
+        const categoryResponse = await fetch(
+          `${API_BASE}/api/${restaurantId}/menu/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+            body: JSON.stringify({ newCategory: category }),
+          }
+        );
 
         if (!categoryResponse.ok) {
           const json = await categoryResponse.json();
@@ -53,7 +61,7 @@ const Add = () => {
 
       // Then add the dish to the category
       const dishResponse = await fetch(
-        `/api/${restaurantId}/menu/${category}/add-dish`,
+        `${API_BASE}/api/${restaurantId}/menu/${category}/add-dish`,
         {
           method: "PATCH",
           headers: {
