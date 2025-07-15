@@ -19,7 +19,12 @@ const Admin = () => {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch(`/api/${restaurantId}/menu`, {
+        const API_BASE =
+          import.meta.env.MODE === "production"
+            ? import.meta.env.VITE_BACKEND_URL
+            : "";
+
+        const response = await fetch(`${API_BASE}/api/${restaurantId}/menu`, {
           headers: {
             Authorization: `Bearer ${user?.token}`,
             Accept: "application/json",

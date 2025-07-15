@@ -4,7 +4,7 @@ const Menu = require("../models/menuModel");
 const getAllMenuItems = async (req, res) => {
   const { id } = req.params;
   const menu = await Menu.find({ RID: id });
-  console.log("Sending menu: ", menu);
+  // console.log("Sending menu: ", menu); for checking menu
   res.status(200).json(menu);
 };
 //get a category
